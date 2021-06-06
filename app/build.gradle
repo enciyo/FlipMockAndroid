@@ -53,7 +53,7 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:2.9.0"
     implementation "com.squareup.retrofit2:converter-gson:2.9.0"
 
-    implementation project(":flippermocknetworkplugin")
+    implementation project(':flipmock')
     implementation("com.squareup.okhttp3:okhttp:4.9.0")
     debugImplementation 'com.facebook.flipper:flipper-network-plugin:0.91.1'
     debugImplementation 'com.facebook.flipper:flipper:0.88.1-SNAPSHOT'

@@ -4,17 +4,6 @@
 <h1 align="center">
   FlipMock
 </h1>
-<p align="center">
-  <a href="https://travis-ci.org/facebook/flipper">
-    <img src="https://travis-ci.org/facebook/flipper.svg?branch=master" alt="Build Status" />
-  </a>
-  <a href="https://search.maven.org/artifact/com.facebook.flipper/flipper">
-    <img src="https://img.shields.io/maven-central/v/com.facebook.flipper/flipper" alt="Android Maven Badge" />
-  </a>
-  <a href="https://cocoapods.org/pods/Flipper">
-    <img src="https://img.shields.io/cocoapods/v/FlipperKit.svg?label=iOS&color=blue" alt="iOS" />
-  </a>
-</p>
 
 <p align="center">
   <a href="">FlipMock</a> is a extended <a href="https://github.com/facebook/flipper"> Flipper </a> plugin that manipulates network response.
@@ -24,18 +13,14 @@
 ## Table of Contents
 
 - [Using FlipMock](#using-flipmock)
-  - [AppDelegate](#appdelegate)
-  - [Making Simple Request (Not recomended for production)](#making-simple-request-not-recomended-for-production)
-  - [Recomended Usage](#recomended-usage)
-  - [If you need customize your session](#if-you-need-customize-your-session)
-    - [Warning](#warning)
+  - [Application](#application)
+  - [OkHttp](#okhttp)
 - [How can I mock the response?](#how-can-i-mock-the-response)
 
 
 ## SDK Features
 
-- [x] Support <a href="https://github.com/Alamofire/Alamofire">Alomofire</a>
-- [ ] Support <a href="https://github.com/Moya/Moya">Moya</a>
+- [x] Support <a href="https://github.com/square/okhttp">OkHttp</a>
 ### Waiting for FlipMock Desktop Plugin support
 - [x] Mock the response by HTTP method. 
 - [x] Mock the response by query parameters. 
@@ -45,83 +30,57 @@
 
 ## Installation
 
-[CocoaPods](https://cocoapods.org) is a dependency manager for Cocoa projects. For usage and installation instructions, visit their website. To integrate FlipMock into your Xcode project using CocoaPods, specify it in your `Podfile`:
 
-```ruby
-# ...
-# Flipper integration
-#  ...
-pod 'FlipMock', '~> 5.2'
-```
-
-<a href="https://fbflipper.com/docs/getting-started/ios-native">How to adding Flipper to IOS apps?</a>
-
-# Using FlipMock
-
-## AppDelegate
-
-
-```swift
-import UIKit
-import FlipperMockPlugin
-import FlipperKit
-
-@main
-class AppDelegate: UIResponder, UIApplicationDelegate {
-
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        let client = FlipperClient.shared() // from FlipperKit
-        //...
-        client?.add(FlipMock.plugin)
-        //...
-        client?.start()
-        return true
+```gradle
+allprojects {
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
     }
-```
+}
 
-## Making Simple Request (Not recomended for production)
-```swift
-FM.request("https://httpbin.org/get").response { response in
-    debugPrint(response)
+dependencies {
+    implementation ''
 }
 ```
 
-## Recomended Usage 
+# Using FlipMock
 
-```swift
-    private lazy var session : Session = {
-        #if DEBUG
-        return FM //FlipMock
-        #endif
-        return AF //Alomofire
-    }()
-    
-    func fetch(onSuccess : @escaping (String?) -> Void){
-        self.session.request("https://httpbin.org/get").response { response in
-    			debugPrint(response)
-		}
+## Application 
+
+
+```kotlin
+
+class FlipperApp : Application() {
+
+    companion object {
+        val flipMockPlugin = FlipMockPlugin.getInstance()
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+        
+        val client = AndroidFlipperClient.getInstance(this)
+        ///....    
+        client.addPlugin(flipMockPlugin)
+        ///...
+        client.start()
+    }
+
+}
+```
+
+## OkHttp
+```kotlin
+   fun provideOkHttpClient(): OkHttpClient {
+        val okhttp = OkHttpClient.Builder()
+        if (BuildConfig.DEBUG){
+            okhttp.addInterceptor(FlipperOkhttpInterceptor(FlipperApp.networkPlugin))
+        }
+        return okhttp.build()
     }
 
 ```
-
-## If you need customize your session
-
-```swift
- private lazy var customMockSession: Session = {
-             let configuration: URLSessionConfiguration = {
-                 let configuration = URLSessionConfiguration.af.default
-                 //@Warning => [FlipMockUrlProtocol.self] should be first
-                 let safeProtocolClasses = [FlipMockUrlProtocol.self] + (configuration.protocolClasses ?? [])
-                 configuration.protocolClasses = safeProtocolClasses
-                 return configuration}()
-         return Session(configuration:configuration)}()
-```
-
-### Warning
-FlipMockUrlProtocol should be first
-```swift
-let safeProtocolClasses = [FlipMockUrlProtocol.self] + (configuration.protocolClasses ?? [])
-``` 
 
 
 # How can I mock the response?

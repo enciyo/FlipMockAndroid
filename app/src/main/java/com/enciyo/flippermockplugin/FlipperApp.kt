@@ -20,7 +20,6 @@ class FlipperApp : Application() {
         val networkPlugin = NetworkFlipperPlugin()
     }
 
-
     override fun onCreate() {
         super.onCreate()
         SoLoader.init(this, false)
