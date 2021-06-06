@@ -4,10 +4,15 @@
 <h1 align="center">
   FlipMock
 </h1>
+<p align="center">
+  <img src="https://jitpack.io/v/enciyo/FlipMock.svg" alt="version"/>
+  </p>
+
 
 <p align="center">
   <a href="">FlipMock</a> is a extended <a href="https://github.com/facebook/flipper"> Flipper </a> plugin that manipulates network response.
 </p>
+
 
 
 ## Table of Contents
@@ -40,7 +45,7 @@ allprojects {
 }
 
 dependencies {
-    implementation ''
+    implementation 'com.github.enciyo:FlipMock:$version'
 }
 ```
 
