@@ -90,8 +90,9 @@ internal class MockPlugin constructor(
     ) {
         this?.receive(methodName) { params, responder ->
             launch(exceptionHandler) {
-                Log.i("MyLogger","received=> $params ")
+                Log.i(FlipMockPlugin.TAG,"received=> $params ")
                 onReceive.invoke(params,responder)
+                Log.i(FlipMockPlugin.TAG,"state=> ${mockManagement.currentList} ")
             }
         }
     }

@@ -11,7 +11,7 @@ import java.lang.IllegalStateException
 
 internal class MockManagement(
     private val queueExecutor: QueueExecutor = QueueExecutorImpl(),
-    private val currentList: ArrayList<Mock> = arrayListOf(),
+    val currentList: ArrayList<Mock> = arrayListOf(),
 ) {
 
     var config: Config = Config()

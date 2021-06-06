@@ -24,7 +24,7 @@ interface Service {
             Retrofit.Builder()
                 .baseUrl("https://www.google.com.tr/")
                 .client(OkHttpClient.Builder()
-                    .addInterceptor(FlipperOkhttpInterceptor(FlipperApp.networkPlugin))
+                    .addInterceptor(FlipperApp.flipMockPlugin.interceptor)
                     .build())
                 .build()
                 .create(Service::class.java)
