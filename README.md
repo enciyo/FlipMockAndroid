@@ -75,7 +75,7 @@ class FlipperApp : Application() {
    fun provideOkHttpClient(): OkHttpClient {
         val okhttp = OkHttpClient.Builder()
         if (BuildConfig.DEBUG){
-            okhttp.addInterceptor(FlipperOkhttpInterceptor(FlipperApp.networkPlugin))
+            okhttp.addInterceptor(FlipperOkhttpInterceptor(FlipperApp.flipMockPlugin))
         }
         return okhttp.build()
     }
