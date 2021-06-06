@@ -24,7 +24,9 @@ internal fun Mock.isSameEndpoint(outMock: Mock) =
 
 internal fun Mock.isSameMock(outMock: Mock) =
     endpoint == outMock.endpoint &&
-            queryParams == outMock.queryParams && isSameRequestType(outMock)
+            (if (queryParams.isEmpty()) true else queryParams == outMock.queryParams) && isSameRequestType(outMock)
+
+
 
 internal fun Mock.isSameRequestType(outMock: Mock) =
     requestType == null ||
