@@ -10,7 +10,7 @@ interface FlipMockPlugin : FlipperPlugin {
     companion object {
         const val TAG = "MyLogger"
         const val PLUGIN_ID = "flipper-plugin-enciyo-flipmock"
-        const val RUN_IN_BACKGROUND = false
+        const val RUN_IN_BACKGROUND = true
         fun getInstance(): FlipMockPlugin = MockPlugin()
     }
 }
