@@ -11,6 +11,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: autojitpack
-        uses: badasintended/autojitpack@v0
+    - name: Auto Release
+      uses: CupOfTea696/gh-action-auto-release@v1.0.2
+      with:
+      title: $semver
+      tag:  $version
+    - name: autojitpack
+      uses: badasintended/autojitpack@v0
         
