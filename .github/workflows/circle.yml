@@ -16,12 +16,5 @@ jobs:
         with:
           java-version: 1.8
       - run: chmod +x gradlew
-      - uses: actions/upload-artifact@v2
-        with:
-          path: "./build/libs/**.jar"
-      - uses: alexellis/upload-assets@0.2.2
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-        with:
-          asset_paths: '["./build/libs/*[0-9.].jar"]'
-      - uses: badasintended/autojitpack@v0
+      - uses: CupOfTea696/gh-action-auto-release@v1.0.2
+    
