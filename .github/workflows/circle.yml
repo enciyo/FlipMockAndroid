@@ -16,7 +16,6 @@ jobs:
         with:
           java-version: 1.8
       - run: chmod +x gradlew
-      - run: ./gradlew build
       - uses: actions/upload-artifact@v2
         with:
           path: "./build/libs/**.jar"
