@@ -22,6 +22,7 @@ internal class MockManagement(
     }
 
     suspend fun addAll(mock: List<Mock>) = queueExecutor.enqueue {
+        currentList.clear()
         currentList.addAll(mock)
     }
 

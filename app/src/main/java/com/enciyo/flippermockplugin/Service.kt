@@ -5,6 +5,7 @@ import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
 import retrofit2.Retrofit
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 
 /**
@@ -14,7 +15,7 @@ import retrofit2.http.GET
 interface Service {
 
     @GET("mock")
-    suspend fun mock1(): ResponseBody
+    suspend fun mock1(@Query("name") name: String): ResponseBody
 
     @GET("mock2")
     suspend fun mock2(): ResponseBody
@@ -23,9 +24,11 @@ interface Service {
         val service: Service by lazy {
             Retrofit.Builder()
                 .baseUrl("https://www.google.com.tr/")
-                .client(OkHttpClient.Builder()
-                    .addInterceptor(FlipperApp.flipMockPlugin.interceptor)
-                    .build())
+                .client(
+                    OkHttpClient.Builder()
+                        .addInterceptor(FlipperApp.flipMockPlugin.interceptor)
+                        .build()
+                )
                 .build()
                 .create(Service::class.java)
         }

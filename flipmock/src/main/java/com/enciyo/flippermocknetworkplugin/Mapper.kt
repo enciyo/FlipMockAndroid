@@ -37,7 +37,10 @@ internal fun Mock.mapResponseBody(request: Request) = Response.Builder()
 internal fun FlipperObject.mapMock() = Mock(
     endpoint = map("endpoint"),
     dummyJsonData = map("dummyJsonData"),
-    uniqueId = map("uniqueId")
+    uniqueId = map("uniqueId"),
+    queryParams = map("queryParams"),
+    httpCode = (map<String>("statusCode").toInt()),
+    requestType = MockRequestMethods.safeValueOf(map("httpMethod"))
 )
 
 internal fun FlipperObject.mapConfig() = Config(

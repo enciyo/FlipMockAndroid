@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
 
             GlobalScope.launch {
                 try {
-                    val data = Service.service.mock1().string()
+                    val data = Service.service.mock1("sadasdsa").string()
                     Log.i("MyLogger", data)
                 }catch (e:Exception){
                     Log.i("MyLogger", e.message.toString())

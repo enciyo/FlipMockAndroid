@@ -9,11 +9,12 @@ import java.lang.Exception
  */
 
 @Keep
-internal enum class MockRequestMethods {
-    POST,
-    GET,
-    PUT,
-    DELETE, ;
+internal enum class MockRequestMethods(val key:String) {
+    POST("Post"),
+    GET("Get"),
+    PUT("Put"),
+    Update("Update"),
+    DELETE("Delete");
 
     companion object {
         fun safeValueOf(value: String, defaultValue: MockRequestMethods? = null) =
