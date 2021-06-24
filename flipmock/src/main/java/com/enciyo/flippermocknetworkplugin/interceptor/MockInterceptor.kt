@@ -21,7 +21,7 @@ internal class MockInterceptor(private val management: MockManagement) : FlipMoc
         val isLoggable = management.config.isLoggable
         if (isMockEnable) {
             val existMock = management.findFirstOrNullMock(request.mapMock())
-            if (existMock != null) {
+            if (existMock != null && existMock.isMockEnable) {
                 if (isLoggable) log(existMock)
                 return existMock.mapResponseBody(request)
             }

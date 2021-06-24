@@ -17,6 +17,7 @@ internal data class Mock @JvmOverloads constructor(
     val httpCode: Int = HttpURLConnection.HTTP_OK, // Feature
     val requestType: MockRequestMethods? = null, // Feature
     val contentTypes: MockContentTypes = MockContentTypes.JSON, // Feature
+    val isMockEnable: Boolean = true
 )
 
 internal fun Mock.isSameEndpoint(outMock: Mock) =
@@ -25,7 +26,6 @@ internal fun Mock.isSameEndpoint(outMock: Mock) =
 internal fun Mock.isSameMock(outMock: Mock) =
     endpoint == outMock.endpoint &&
             (if (queryParams.isEmpty()) true else queryParams == outMock.queryParams) && isSameRequestType(outMock)
-
 
 
 internal fun Mock.isSameRequestType(outMock: Mock) =

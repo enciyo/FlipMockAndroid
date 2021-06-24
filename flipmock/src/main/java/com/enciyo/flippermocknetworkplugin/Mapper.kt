@@ -39,8 +39,9 @@ internal fun FlipperObject.mapMock() = Mock(
     dummyJsonData = map("dummyJsonData"),
     uniqueId = map("uniqueId"),
     queryParams = map("queryParams"),
-    httpCode = (map<String>("statusCode").toInt()),
-    requestType = MockRequestMethods.safeValueOf(map("httpMethod"))
+    httpCode = map("statusCode"),
+    requestType = MockRequestMethods.safeValueOf(map("httpMethod")),
+    isMockEnable = map("isMockEnable")
 )
 
 internal fun FlipperObject.mapConfig() = Config(
@@ -55,9 +56,14 @@ internal fun FlipperArray.mapMock(): List<Mock> {
 }
 
 inline fun <reified T> FlipperObject.map(param:String) : T{
-    val result = this[param]
+    val result = when(T::class.simpleName){
+        String::class.simpleName -> this.getString(param)
+        Int::class.simpleName -> this.getInt(param)
+        Boolean::class.simpleName -> this.getBoolean(param)
+        else-> throw NotSerializableException("$param expected ${T::class.simpleName} but return ${this[param]} ${this[param]::class.simpleName}")
+    }
     if (result as? T == null){
-        throw NotSerializableException("$param expected ${T::class.simpleName} but return $result")
+        throw NotSerializableException("$param expected ${T::class.simpleName} but return $result ${result::class.simpleName}")
     }
     return result
 }
